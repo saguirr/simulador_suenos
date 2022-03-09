@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIMULADOR DE SUEÑOS</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="css/estilos.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+
+</head>
+<body>
+    
+    <div class="container " id="contenido">
+        <div class="row justify-content-center mt-5 pt-5">
+          <div class="col-md-7">
+            <h2>BIENVENIDO AL SIMULADOR DE SUEÑOS</h2>
+            <p>Te invitamos a realizar la simulación según tus necesidades y expectativas.</p>
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#registro">Registro</a></li>
+              <li><a data-toggle="tab" href="#sueño">Sueños</a></li>
+              <li><a data-toggle="tab" href="#opcion">Opción</a></li>
+              <li><a data-toggle="tab" href="#simulacion">Simulación</a></li>
+            </ul>
+          
+            <div class="tab-content">
+              <div id="registro" class="tab-pane fade in active">
+                <h3 class="text-center">Te invitamos a que ingreses tus datos personales.</h3>
+                <div class="row justify-content-center">
+                    <form id="form-registro">               
+                        <div class="row form-group">
+                            <label for="identificacion" class="col-form-label col-md-4">Identificación:</label>
+                            <div class="justify-content-center col-md-3">
+                                <input type="text" name="identificacion" value="" id="identificacion" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="nombre" class="col-form-label col-md-4">Nombre:</label>
+                            <div class="justify-content-center col-md-8">
+                                <input type="text" name="nombre" value="" id="nombre" class="form-control">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">Siguiente</button>
+                      </form>
+                </div>                
+              </div>
+              <div id="sueño" class="tab-pane fade">
+                <h3 class="text-center">Selecciona el sueño que quieres alcanzar</h3>    
+                <div class="justify-content-center align-items-center">
+                    <form id="form-sueño">
+                      <div  class="justify-content-center col-md-4">
+                        <h3 class="text-center">Educación</h3>
+                        <button type="button"  id="educacion" class="align-items-center"><img src="imagenes/EDUCACION.png"/></button> 
+                      </div>
+                      <div  class="justify-content-center col-md-4">
+                        <h3 class="text-center">Emprendimiento</h3>
+                        <button type="button"  id="emprendimiento" class="align-items-center"><img src="imagenes/EMPRENDIMIENTO.png"/></button> 
+                      </div>
+                      <div  class="justify-content-center col-md-4">
+                        <h3 class="text-center">Matrimonio</h3>
+                        <button type="button"  id="matrimonio" class="align-items-center"><img src="imagenes/MATRIMONIO.png"/></button> 
+                      </div>
+                      <div  class="justify-content-center col-md-4">
+                        <h3 class="text-center">Tecnologico</h3>
+                        <button type="button"  id="tecnologico" class="align-items-center"><img src="imagenes/TECNOLOGICO.png"/></button> 
+                      </div>
+                      <div  class="justify-content-center col-md-4">
+                        <h3 class="text-center">Vacaciones</h3>
+                        <button type="button"  id="vacaciones" class="align-items-center"><img src="imagenes/VACACIONES.png"/></button> 
+                      </div>
+                      <div  class="justify-content-center col-md-4">
+                        <h3 class="text-center">Vehículo</h3>
+                         <button type="button"  id="vehiculo" class="align-items-center"><img src="imagenes/VEHICULO.png"/></button>
+                      </div>
+                      <div class="justify-content-center col-md-4">
+                        <h3 class="text-center">Vivienda</h3>
+                        <button type="button"  id="vivienda" class="align-items-center"><img src="imagenes/VIVIENDA.png"/></button>
+                      </div>                         
+                    </form>                    
+                </div>                
+              </div>
+              <div id="opcion" class="tab-pane fade externo">
+              <div class="col-lg-12 agregar-opcion">              
+                  <h3 class="text-center">¿Cómo quieres lograr tu sueño?</h3>
+                  <p class="text-center">Elige el porcentaje de ahorro o crédito con lo que considerás vas a llegar a tu meta.</p>
+                  <div class="justify-content-center col-md-5">
+                      <h3 class="text-center">% Ahorros</h3>
+                      <input type="number" min="1" max="100" id="ahorros" class="form-control" placeholder="% Ahorro">
+                  </div>
+                  <div class="justify-content-center col-md-5">
+                      <h3 class="text-center">% Crédito</h3>
+                      <input type="number" min="1" max="100" id="credito" class="form-control" placeholder="% Crédito">
+                  </div>
+                  <div class="justify-content-center col-md-5">
+                      <h3 class="text-center">¿Cuál es el valor de tu meta?</h3>
+                      <input type="text" id="valor" class="form-control" data-type="currency">    
+                  </div>
+                  <div class="justify-content-center col-md-5">
+                      <h3 class="text-center">¿En cuántos meses quieres lograrlo?</h3>
+                      <input type="number" min="1" max="72" id="meses" class="form-control" placeholder="# Meses">    
+                  </div>   
+                  <div class="externo col-md-10">
+                      <button type="button" id="calcular" class="btn btn-danger">CALCULAR</button>
+                  </div>
+                </div>               
+              </div>
+
+              <div id="simulacion" class="tab-pane fade interno">
+                <p class="text-center">Estamos felices de saber que tienes grandes sueños y metas por cumplir y que nosotros podemos acompañarte en ese camino.</p>                
+              </div>
+            </div>
+          </div>
+        </div>  
+      </div>        
+    
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+          apiKey: "AIzaSyBv6aO9gZyPzxkZW3Pv4rUATVMHDmolP2c",
+          authDomain: "crud-simuladores.firebaseapp.com",
+          projectId: "crud-simuladores",
+          storageBucket: "crud-simuladores.appspot.com",
+          messagingSenderId: "715282273282",
+          appId: "1:715282273282:web:2c6094dc6a8a4ead18831b",
+          measurementId: "G-DTNH00CM25"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+    
+    <script type="text/javascript"  src="js/simulador_suenos.js"></script>
+
+</body>
+</html>
+<br>
+<br>
+<br>
+<div class="container-fluid">
+  <span style="color: #000000">
+    <strong>Nota:</strong>
+    Los valores resultantes de esta simulación son de carácter informativo y pueden estar sujetos a variación conforme a las tasas de interés y plazos vigentes en el reglamento de Ahorros 
+    del Fondo de Empleados Protección**
+  </span>
+</div>
