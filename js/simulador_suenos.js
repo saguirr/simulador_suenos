@@ -1,8 +1,9 @@
 const db = firebase.firestore();
 
-const form_registro = document.getElementById("form-registro");
-const form_sueño = document.getElementById("form-sueño");
-const resultado = document.getElementById("simulacion");
+const contenido = document.getElementById("contenido");
+const cedula = document.getElementById("identificacion");
+const nombre = document.getElementById("nombre");
+const btnsiguiente = document.getElementById("siguiente");
 
 const btneducacion = document.getElementById("educacion");
 const btnemprendimiento = document.getElementById("emprendimiento");
@@ -13,14 +14,13 @@ const btnvehiculo = document.getElementById("vehiculo");
 const btnvivienda = document.getElementById("vivienda");
 const btncalcular = document.getElementById("calcular");
 
-const contenido = document.getElementById("contenido");
-const cedula = document.getElementById("identificacion");
-const nombre = document.getElementById("nombre");
-
 const porAhorros = document.getElementById("ahorros");
-const porCredito = document.getElementById("credito");
 const valValor = document.getElementById("valor");
 const valMeses = document.getElementById("meses");
+
+const form_registro = document.getElementById("form-registro");
+const form_sueño = document.getElementById("form-sueño");
+const resultado = document.getElementById("simulacion");
 
 //Variable de Tasas
 const tasaED = 0.0375
@@ -35,12 +35,28 @@ let meses;
 let tasaPeriodo;
 let tasa;
 let totalGeneral;
+let quincena;
+let cr;
+let valorCuotaMensual;
+let valorCuotaQuincenal;
+let valorCredito;
 
 
 /**
  *Save a new simulacion in firestore
- @param {string} cedula      Cedula Asociado
- @param {string} nombre      Nombre Asociado
+ @param {string} cedula
+ @param {string} nombre
+ @param {string} tipo
+ @param {string} meta
+ @param {string} valorAhorro   
+ @param {string} meses  
+ @param {string} quincenas   
+ @param {string} tasa   
+ @param {string} valorCuotaMensual      
+ @param {string} valorCuotaQuincenal     
+ @param {string} totalGeneral
+ @param {string} cr
+ @param {string} valorCredito
  */
 
  //Clases
@@ -49,35 +65,40 @@ let totalGeneral;
      imprimirAlerta(mensaje, tipo){
          //crear el div
          const divMensaje = document.createElement('div');
-         divMensaje.classList.add('text-center', 'alert', 'd-block', 'col-7');
+         divMensaje.classList.add('text-center', 'sans-serif', 'alert', 'd-block', 'col-7');
+
+         const divMensaje1 = document.createElement('div');
+         divMensaje1.classList.add('text-center', 'sans-serif', 'alert', 'd-block', 'col-7');
+
 
          //Agregar clase en base al tipo de error
          if(tipo === 'error'){
-             divMensaje.classList.add('alert-danger');             
+             divMensaje.classList.add('alert-danger'); 
+             divMensaje1.classList.add('alert-danger');            
          }else{
              divMensaje.classList.add('alert-success')
+             divMensaje1.classList.add('alert-danger'); 
          }
 
          //Mensaje de error
          divMensaje.textContent = mensaje;
+         divMensaje1.textContent = mensaje;
 
          //Agregar al DOM
          document.querySelector('#opcion').insertBefore(divMensaje, document.querySelector('.agregar-opcion'));
+         document.querySelector('#registro').insertBefore(divMensaje1, document.querySelector('.agregar-registro'));
 
          //Quitar la alerta después de 5 segundos
          setTimeout(() => {
-             divMensaje.remove();             
+             divMensaje.remove();
+             divMensaje1.remove();            
          }, 3000);
      }
  }
 
 const ui = new UI();
  
- const saveRegistro = (cedula, nombre) =>    
- db.collection("simuladorsuenos").doc().set({
-     cedula,
-     nombre,
- }); 
+
 
 const onGetSuenos = (callback) => db.collection("simuladorsuenos").onSnapshot(callback);
 const getSuenosid = (id) => db.collection("simuladorsuenos").doc(id).get(); 
@@ -88,31 +109,20 @@ window.addEventListener("DOMContentLoaded", async(e) => {
     
 })
 
-function buscarUsuario(){
-    onGetSuenos((query))
-}
 
-form_registro.addEventListener('submit', async(e) => {
+btnsiguiente.addEventListener("click", async (e) => {
     e.preventDefault();
 
     const cedula = form_registro['identificacion'];
     const nombre = form_registro['nombre'];
 
-    //const nombreasociado = nombre.value;
-
     if(cedula.value == '' || nombre.value == '') {
-        alert("Faltan datos para realizar el registro")
+        ui.imprimirAlerta("Faltan datos para realizar el registro");
         return;
     } else {
-
-        await saveRegistro(cedula.value, nombre.value)
-        form_registro.reset();
-        //cedula.focus
-
-        activaTab('sueño');
+        activaTab('sueño');        
     }
 });
-
 
 btneducacion.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -163,66 +173,109 @@ btnvivienda.addEventListener("click", async (e) => {
     seleccion = "Vivienda"  
 });
 
+const saveRegistro = (cedula, nombre, tipo, meta, valorAhorro,
+    meses, quincenas, tasa, valorCuotaMensual, valorCuotaQuincenal, totalGeneral, cr, valorCredito) =>
+    db.collection("simuladorsuenos").doc().set({
+    cedula,
+    nombre,
+    tipo,
+    meta,
+    valorAhorro,
+    meses,
+    quincenas,    
+    tasa,
+    valorCuotaMensual,
+    valorCuotaQuincenal,
+    totalGeneral,
+    cr,
+    valorCredito,
+});
+
 btncalcular.addEventListener("click", async (e) => {
     e.preventDefault();
 
-    activaTab('simulacion');
-    simulacion();
-        
+    const ah = parseInt(porAhorros.value);
+    const va = valValor.value;
+    const meses = parseInt(valMeses.value);
+    val = Number(va.replace(/,/g, ''));
+
+    //Validacion
+    try {
+        if(isNaN(ah) || isNaN(val) || isNaN(meses) || val === 0){
+            ui.imprimirAlerta('Todos los campos son obligatorios para realizar la simulación', 'error');
+            return;
+        }else if (ah > 100) {
+            ui.imprimirAlerta('El porcentaje de Ahorro no puede ser superior al 100%', 'error');
+            return;
+        }    
+        else{        
+            activaTab('simulacion');
+            simulacion();
+    
+            await saveRegistro(cedula.value, nombre.value, tipo, meta, valorAhorro, meses, quincenas,
+                tasa, valorCuotaMensual, valorCuotaQuincenal, totalGeneral, cr,  valorCredito);
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 function simulacion(e){
 
     //console.log(nombreasociado);
 
+    
+    const url = "www.feproteccion.com.co"
+
     const ah = parseInt(porAhorros.value);
-    const cr = parseInt(porCredito.value);
+    //const cr = parseInt(porCredito.value);
     const va = valValor.value;
     const meses = parseInt(valMeses.value);
-    const quincenas = parseInt(valMeses.value * 2);
+    quincenas = parseInt(valMeses.value * 2);
     const dias = parseInt(valMeses.value * 30.471);
     val = Number(va.replace(/,/g, ''));
 
-    //Validacion
-    if(isNaN(ah) || isNaN(cr)){
-        ui
+    if (ah === 100) {
+        cr = 0;
     }
-
-    //Calculo tasa del periodo 
+    if ((ah > 0) && (ah < 100)){
+        cr = 100 - ah;
+    }
 
     switch (seleccion) {
         case "Educacion":
-            tipo = "AHORRO EDUCACIÓN"
+            tipo = "Ahorro Universitario"
             tasaPeriodo = Math.round10((((1 + tasaPV) ** (1 / 365)) ** dias) - 1, -5);
             tasa = Math.round10((tasaPV * 100), -5);
             break;
         case "Emprendimiento":
-            tipo = "AHORRO ORDINARIO"
+            tipo = "Ahorro Ordinario"
             tasaPeriodo = Math.round10((((1 + tasaFE) ** (1 / 365)) ** dias) - 1, -5);
             tasa = Math.round10((tasaFE * 100), -5);
             break;
         case "Matrimonio":
-            tipo = "AHORRO ORDINARIO"
+            tipo = "Ahorro Ordinario"
             tasaPeriodo = Math.round10((((1 + tasaORD) ** (1 / 365)) ** dias) - 1, -5);
             tasa = Math.round10((tasaORD * 100), -5);
             break;
         case "Tecnologico":
-            tipo = "AHORRO ORDINARIO"
+            tipo = "Ahorro Ordinario"
             tasaPeriodo = Math.round10((((1 + tasaPV) ** (1 / 365)) ** dias) - 1, -5);
             tasa = Math.round10((tasaPV * 100), -5);
             break;
         case "Vacaciones":
-            tipo = "AHORRO FIN ESPECIFICO"
+            tipo = "Ahorro Fin Específico"
             tasaPeriodo = Math.round10((((1 + tasaFE) ** (1 / 365)) ** dias) - 1, -5);
             tasa = Math.round10((tasaFE * 100), -5);
             break;
-        case "Vehículo":
-            tipo = "AHORRO FIN ESPECIFICO"
+        case "Vehiculo":
+            tipo = "Ahorro Fin Específico"
             tasaPeriodo = Math.round10((((1 + tasaORD) ** (1 / 365)) ** dias) - 1, -5);
             tasa = Math.round10((tasaORD * 100), -5);
             break;
         case "Vivienda":
-            tipo = "AHORRO PROVIVIENDA"
+            tipo = "Ahorro Provivienda"
             tasaPeriodo = Math.round10((((1 + tasaORD) ** (1 / 365)) ** dias) - 1, -5);
             tasa = Math.round10((tasaORD * 100), -5);
             break;
@@ -234,7 +287,8 @@ function simulacion(e){
     const valCredito = parseInt(val * (cr / 100));
     const valCuotaM = parseInt(valAhorro / meses);
     const valCuotaQ = parseInt(valCuotaM / 2);
-    
+    let asociado = nombre.value
+
     tasaPer = Math.round10((tasaPeriodo * 100), -5);
     meta = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0}).format(val);
     interes =  val * tasaPeriodo;
@@ -250,47 +304,60 @@ function simulacion(e){
 
     //Scripting d elos elementos de la simulación
 
+    const asociadoParrafo = document.createElement('h3');
+    asociadoParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder', 'text-center');
+    asociadoParrafo.innerHTML = `<span style="color: #0B2A70">${asociado} </span>`;
+
     const tipoParrafo = document.createElement('h3');
+    //tipoParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
     tipoParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
-    tipoParrafo.innerHTML = `<span style="color: #0B2A70">AHORRO:</span> <span style="color: #0B2A70">${tipo} </span>`;
+    tipoParrafo.innerHTML = `<span class="subtitulo">El ahorro que debes aperturar para cumplir tu sueño es:</span> 
+                            <br>
+                            <span class="resultado">${tipo} </span>
+                            <br>
+                            <br>`;
 
     const metaParrafo = document.createElement('p');
     metaParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
-    metaParrafo.innerHTML = `<span style="color: #000000; font-weight:bold">Sueños a Alcanzar:</span> <span style="color: #000000">${meta} </span>`;
+    metaParrafo.innerHTML = `<span class="subtitulo">Sueño a Alcanzar:</span> <span class="resultado_1">${meta} </span>`;
 
     const ahorroParrafo = document.createElement('p');
     ahorroParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
-    ahorroParrafo.innerHTML = `<span style="color: #000000; font-weight:bold">Total a Ahorrar:</span> <span style="color: #000000">${valorAhorro} </span>`;
+    ahorroParrafo.innerHTML = `<span class="subtitulo">Total a Ahorrar:</span> <span class="resultado">${valorAhorro} </span>`;
 
     const mesesParrafo = document.createElement('p');
     mesesParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
-    mesesParrafo.innerHTML = `<span style="color: #000000; font-weight:bold">Plazo en meses:</span> <span style="color: #000000">${meses} meses</span>`;
+    mesesParrafo.innerHTML = `<span class="subtitulo">Plazo en meses:</span> <span class="resultado">${meses} meses</span>`;
 
     const quincenasParrafo = document.createElement('p');
     quincenasParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
-    quincenasParrafo.innerHTML = `<span style="color: #000000; font-weight:bold">Plazo en quincenas:</span> <span style="color: #000000">${quincenas}</span>`;
+    quincenasParrafo.innerHTML = `<span class="subtitulo">Plazo en quincenas:</span> <span class="resultado_1">${quincenas}</span>`;
 
     const tasaAhParrafo = document.createElement('p');
     tasaAhParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
-    tasaAhParrafo.innerHTML = `<span style="color: #000000; font-weight:bold">Tasa del Ahorro:</span> <span style="color: #000000">${tasa} %</span>`;
+    tasaAhParrafo.innerHTML = `<span class="subtitulo">Tasa del Ahorro:</span> <span class="resultado_1">${tasa} %</span>`;
 
     const cuotaMenParrafo = document.createElement('p');
     cuotaMenParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
-    cuotaMenParrafo.innerHTML = `<span style="color: #000000; font-weight:bold">Cuota Mensual:</span> <span style="color: #000000">${valorCuotaMensual}</span>`;
+    cuotaMenParrafo.innerHTML = `<span class="subtitulo">Cuota Mensual:</span> <span class="resultado">${valorCuotaMensual}</span>`;
 
     const cuotaQuiParrafo = document.createElement('p');
     cuotaQuiParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
-    cuotaQuiParrafo.innerHTML = `<span style="color: #000000; font-weight:bold">Cuota Quincenal:</span> <span style="color: #000000">${valorCuotaQuincenal}</span>`;
+    cuotaQuiParrafo.innerHTML = `<span class="subtitulo">Cuota Quincenal:</span> <span class="resultado_1">${valorCuotaQuincenal}</span>`;
 
     const totalTotal = document.createElement('p');
     totalTotal.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
-    totalTotal.innerHTML = `<span style="color: #000000; font-weight:bold">Valor Aproximado a Recibir:</span> <span style="color: #000000"> ${totalGeneral}</span>`;
+    totalTotal.innerHTML = `<span class="subtitulo">Valor Aproximado a Recibir:</span> <span class="resultado_1"> ${totalGeneral}</span>`;
 
     const creditoParrafo = document.createElement('p');
     creditoParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
-    creditoParrafo.innerHTML = `<span style="color: #000000; font-weight:bold">Valor en Crédito:</span> <span style="color: #000000">${valorCredito} </span>`;
+    creditoParrafo.innerHTML = `<span class="cuerpo">El porcentaje de crédito para completar tu meta es de:</span> <span class="resultado_1">${cr} % </span>
+                                <span class="cuerpo">Que corresponde a un valor en Crédito de:</span> <span class="resultado_1">${valorCredito}. </span>
+                                <br>
+                                <span class="cuerpo">Para realizar la simulación del valor del crédito, ingresa a Servicios en Línea en:</span> <span class="cuerpo">${url} </span>`;
 
     //Agregar los parrafos al divCita
+    divResultado.appendChild(asociadoParrafo);
     divResultado.appendChild(tipoParrafo);
     divResultado.appendChild(metaParrafo);
     divResultado.appendChild(ahorroParrafo);    
@@ -319,6 +386,7 @@ function simulacion(e){
     //formulario.reset();
     
 }
+
 
 function activaTab(tab){
     $('.nav-tabs a[href="#' + tab + '"]').tab('show');
@@ -396,3 +464,11 @@ $("input[data-type='currency']").inputmask({
 }).click(function() {
     $(this).select();
 });
+
+function printDiv(nombreDiv) {
+    var contenido = document.getElementById("simulacion").innerHTML;
+    var contenidoOriginal= document.body.innerHTML;
+    document.body.innerHTML = contenido;
+    window.print();
+    document.body.innerHTML = contenidoOriginal;
+}
