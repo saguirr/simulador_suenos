@@ -23,20 +23,23 @@ const form_sueño = document.getElementById("form-sueño");
 const resultado = document.getElementById("simulacion");
 
 //Variable de Tasas
-const tasaED = 0.0375
-const tasaFE = 0.0275
-const tasaPV = 0.0375
-const tasaORD = 0.0175
+const tasaED = 0.06;
+const tasaFE = 0.05;
+const tasaPV = 0.06;
+const tasaORD = 0.025;
 
 //Resultado
+let porAh;
 let tipo;
 let valor;
 let meses;
 let tasaPeriodo;
+let tasaP30;
+let diames;
 let tasa;
 let totalGeneral;
 let quincena;
-let cr;
+let porCr;
 let valorCuotaMensual;
 let valorCuotaQuincenal;
 let valorCredito;
@@ -48,14 +51,16 @@ let valorCredito;
  @param {string} nombre
  @param {string} tipo
  @param {string} meta
+ @param {string} porAh
  @param {string} valorAhorro   
  @param {string} meses  
  @param {string} quincenas   
- @param {string} tasa   
+ @param {string} tasa
+ @param {string} tasaPer   
  @param {string} valorCuotaMensual      
  @param {string} valorCuotaQuincenal     
  @param {string} totalGeneral
- @param {string} cr
+ @param {string} porCr
  @param {string} valorCredito
  */
 
@@ -116,12 +121,15 @@ btnsiguiente.addEventListener("click", async (e) => {
     const cedula = form_registro['identificacion'];
     const nombre = form_registro['nombre'];
 
+    const diames = parseInt(30);
+
     if(cedula.value == '' || nombre.value == '') {
         ui.imprimirAlerta("Faltan datos para realizar el registro");
         return;
     } else {
         activaTab('sueño');        
-    }
+    }    
+
 });
 
 btneducacion.addEventListener("click", async (e) => {
@@ -173,47 +181,50 @@ btnvivienda.addEventListener("click", async (e) => {
     seleccion = "Vivienda"  
 });
 
-const saveRegistro = (cedula, nombre, tipo, meta, valorAhorro,
-    meses, quincenas, tasa, valorCuotaMensual, valorCuotaQuincenal, totalGeneral, cr, valorCredito) =>
+const saveRegistro = (cedula, nombre, tipo, meta, porAh, valorAhorro,
+    meses, quincenas, tasa, tasaPer, valorCuotaMensual, valorCuotaQuincenal, totalGeneral, porCr, valorCredito) =>
     db.collection("simuladorsuenos").doc().set({
     cedula,
     nombre,
     tipo,
     meta,
+    porAh,
     valorAhorro,
     meses,
     quincenas,    
     tasa,
+    tasaPer,
     valorCuotaMensual,
     valorCuotaQuincenal,
     totalGeneral,
-    cr,
+    porCr,
     valorCredito,
 });
 
 btncalcular.addEventListener("click", async (e) => {
     e.preventDefault();
 
-    const ah = parseInt(porAhorros.value);
+    const porAh = parseInt(porAhorros.value);
     const va = valValor.value;
     const meses = parseInt(valMeses.value);
     val = Number(va.replace(/,/g, ''));
 
     //Validacion
     try {
-        if(isNaN(ah) || isNaN(val) || isNaN(meses) || val === 0){
+        if(isNaN(porAh) || isNaN(val) || isNaN(meses) || val === 0){
             ui.imprimirAlerta('Todos los campos son obligatorios para realizar la simulación', 'error');
             return;
-        }else if (ah > 100) {
+        }else if (porAh > 100) {
             ui.imprimirAlerta('El porcentaje de Ahorro no puede ser superior al 100%', 'error');
             return;
         }    
         else{        
             activaTab('simulacion');
             simulacion();
+            
     
-            await saveRegistro(cedula.value, nombre.value, tipo, meta, valorAhorro, meses, quincenas,
-                tasa, valorCuotaMensual, valorCuotaQuincenal, totalGeneral, cr,  valorCredito);
+            await saveRegistro(cedula.value, nombre.value, tipo, meta, porAh, valorAhorro, meses, quincenas,
+                tasa, tasaPer, valorCuotaMensual, valorCuotaQuincenal, totalGeneral, porCr,  valorCredito);
         }
 
     } catch (error) {
@@ -228,76 +239,110 @@ function simulacion(e){
     
     const url = "www.feproteccion.com.co"
 
-    const ah = parseInt(porAhorros.value);
+    const porAh = parseInt(porAhorros.value);
     //const cr = parseInt(porCredito.value);
     const va = valValor.value;
     const meses = parseInt(valMeses.value);
     quincenas = parseInt(valMeses.value * 2);
     const dias = parseInt(valMeses.value * 30.471);
     val = Number(va.replace(/,/g, ''));
+    const diames = parseInt(30); 
 
-    if (ah === 100) {
-        cr = 0;
+    if (porAh === 100) {
+        porCr = 0;
     }
-    if ((ah > 0) && (ah < 100)){
-        cr = 100 - ah;
+    if ((porAh > 0) && (porAh < 100)){
+        porCr = 100 - porAh;
     }
 
     switch (seleccion) {
         case "Educacion":
             tipo = "Ahorro Universitario"
-            tasaPeriodo = Math.round10((((1 + tasaPV) ** (1 / 365)) ** dias) - 1, -5);
-            tasa = Math.round10((tasaPV * 100), -5);
+            tasaPeriodo = Math.round10((((1 + tasaED) ** (1 / 365)) ** dias), -1, -5);
+            tasaP30 = Math.round10((((1 + tasaED) ** (1 / 365)) ** diames) - 1, -5);
+            tasa = Math.round10((tasaED * 100), -5);            
             break;
         case "Emprendimiento":
             tipo = "Ahorro Ordinario"
-            tasaPeriodo = Math.round10((((1 + tasaFE) ** (1 / 365)) ** dias) - 1, -5);
-            tasa = Math.round10((tasaFE * 100), -5);
+            tasaPeriodo = Math.round10((((1 + tasaORD) ** (1 / 365)) ** dias) - 1, -5);
+            tasaP30 = Math.round10((((1 + tasaORD) ** (1 / 365)) ** diames) - 1, -5);
+            tasa = Math.round10((tasaORD * 100), -5);
             break;
         case "Matrimonio":
             tipo = "Ahorro Ordinario"
             tasaPeriodo = Math.round10((((1 + tasaORD) ** (1 / 365)) ** dias) - 1, -5);
+            tasaP30 = Math.round10((((1 + tasaORD) ** (1 / 365)) ** diames) - 1, -5);
             tasa = Math.round10((tasaORD * 100), -5);
             break;
         case "Tecnologico":
             tipo = "Ahorro Ordinario"
-            tasaPeriodo = Math.round10((((1 + tasaPV) ** (1 / 365)) ** dias) - 1, -5);
-            tasa = Math.round10((tasaPV * 100), -5);
+            tasaPeriodo = Math.round10((((1 + tasaORD) ** (1 / 365)) ** dias) - 1, -5);
+            tasaP30 = Math.round10((((1 + tasaORD) ** (1 / 365)) ** diames) - 1, -5);
+            tasa = Math.round10((tasaORD * 100), -5);
             break;
         case "Vacaciones":
             tipo = "Ahorro Fin Específico"
             tasaPeriodo = Math.round10((((1 + tasaFE) ** (1 / 365)) ** dias) - 1, -5);
+            tasaP30 = Math.round10((((1 + tasaFE) ** (1 / 365)) ** diames) - 1, -5);
             tasa = Math.round10((tasaFE * 100), -5);
             break;
         case "Vehiculo":
             tipo = "Ahorro Fin Específico"
-            tasaPeriodo = Math.round10((((1 + tasaORD) ** (1 / 365)) ** dias) - 1, -5);
-            tasa = Math.round10((tasaORD * 100), -5);
+            tasaPeriodo = Math.round10((((1 + tasaFE) ** (1 / 365)) ** dias) - 1, -5);
+            tasaP30 = Math.round10((((1 + tasaFE) ** (1 / 365)) ** diames) - 1, -5);
+            tasa = Math.round10((tasaFE * 100), -5);
             break;
         case "Vivienda":
-            tipo = "Ahorro Provivienda"
-            tasaPeriodo = Math.round10((((1 + tasaORD) ** (1 / 365)) ** dias) - 1, -5);
-            tasa = Math.round10((tasaORD * 100), -5);
+            tipo = "Ahorro Provivienda"            
+            tasaPeriodo = Math.round10((((1 + tasaPV) ** (1 / 365)) ** dias) - 1, -5);
+            tasaP30 = Math.round10((((1 + tasaPV) ** (1 / 365)) ** diames) - 1, -5);            
+            tasa = Math.round10((tasaPV * 100), -5);
+            console.log(tasaP30);                      
             break;
         default:
             break;
     }
-
-    const valAhorro = parseInt(val * (ah / 100));
-    const valCredito = parseInt(val * (cr / 100));
+   
+    const valAhorro = parseInt(val * (porAh / 100));
+    const valCredito = parseInt(val * (porCr / 100));
     const valCuotaM = parseInt(valAhorro / meses);
     const valCuotaQ = parseInt(valCuotaM / 2);
-    let asociado = nombre.value
+    let asociado = nombre.value    
+    
+    let n = 1;    
+    let calcuota = 0;
+    let suma = 0;
+    let valor = 0;
 
-    tasaPer = Math.round10((tasaPeriodo * 100), -5);
+    while (n <= meses) {
+
+        suma = (suma + valCuotaM);
+        //console.log('La suma es:', suma);
+        interes = (suma*tasaP30)+suma
+        //console.log('El valor es de:', valor);
+        calcuota = calcuota + interes;
+        suma = calcuota;
+        valor = valor + suma;       
+        //console.log('El Calculo cuota es de:', calcuota);        
+        
+        calcuota = 0
+        cuota = 0;
+        n = n + 1;
+
+   };
+   
+   //console.log('Total es:', suma)
+
+    tasaPer = Math.round10((tasaP30 * 100), -5);
     meta = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0}).format(val);
-    interes =  val * tasaPeriodo;
+    //interes =  valAhorro * tasaPeriodo;
     interesT = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0 }).format(interes);
     valorAhorro = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0 }).format(valAhorro);
     valorCredito = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0 }).format(valCredito);
     valorCuotaMensual = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0 }).format(valCuotaM);
     valorCuotaQuincenal = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0 }).format(valCuotaQ);
-    totalGeneral = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0}).format(valAhorro + interes);
+    //totalGeneral = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0}).format(valAhorro + interes);
+    totalGeneral = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0}).format(suma);
 
     const divResultado = document.createElement('div');
     divResultado.classList.add('simulacion', 'p-3');
@@ -321,6 +366,10 @@ function simulacion(e){
     metaParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
     metaParrafo.innerHTML = `<span class="subtitulo">Sueño a Alcanzar:</span> <span class="resultado_1">${meta} </span>`;
 
+    const porcentajeAhorroParrafo = document.createElement('p');
+    porcentajeAhorroParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
+    porcentajeAhorroParrafo.innerHTML = `<span class="subtitulo">Porcentaje de Ahorro:</span> <span class="resultado_1">${porAh} % </span>`;
+
     const ahorroParrafo = document.createElement('p');
     ahorroParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
     ahorroParrafo.innerHTML = `<span class="subtitulo">Total a Ahorrar:</span> <span class="resultado">${valorAhorro} </span>`;
@@ -337,6 +386,10 @@ function simulacion(e){
     tasaAhParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
     tasaAhParrafo.innerHTML = `<span class="subtitulo">Tasa del Ahorro:</span> <span class="resultado_1">${tasa} %</span>`;
 
+    const tasaPeParrafo = document.createElement('p');
+    tasaPeParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
+    tasaPeParrafo.innerHTML = `<span class="subtitulo">Tasa del Periodo:</span> <span class="resultado_1">${tasaPer} %</span>`;
+
     const cuotaMenParrafo = document.createElement('p');
     cuotaMenParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
     cuotaMenParrafo.innerHTML = `<span class="subtitulo">Cuota Mensual:</span> <span class="resultado">${valorCuotaMensual}</span>`;
@@ -347,11 +400,11 @@ function simulacion(e){
 
     const totalTotal = document.createElement('p');
     totalTotal.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
-    totalTotal.innerHTML = `<span class="subtitulo">Valor Aproximado a Recibir:</span> <span class="resultado_1"> ${totalGeneral}</span>`;
+    totalTotal.innerHTML = `<span class="subtitulo">Valor Aproximado a Recibir:</span> <span class="resultado"> ${totalGeneral}</span>`;
 
     const creditoParrafo = document.createElement('p');
     creditoParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
-    creditoParrafo.innerHTML = `<span class="cuerpo">El porcentaje de crédito para completar tu meta es de:</span> <span class="resultado_1">${cr} % </span>
+    creditoParrafo.innerHTML = `<span class="cuerpo">El porcentaje de crédito para completar tu meta es de:</span> <span class="resultado_1">${porCr} % </span>
                                 <span class="cuerpo">Que corresponde a un valor en Crédito de:</span> <span class="resultado_1">${valorCredito}. </span>
                                 <br>
                                 <span class="cuerpo">Para realizar la simulación del valor del crédito, ingresa a Servicios en Línea en:</span> <span class="cuerpo">${url} </span>`;
@@ -360,10 +413,12 @@ function simulacion(e){
     divResultado.appendChild(asociadoParrafo);
     divResultado.appendChild(tipoParrafo);
     divResultado.appendChild(metaParrafo);
+    divResultado.appendChild(porcentajeAhorroParrafo);
     divResultado.appendChild(ahorroParrafo);    
     divResultado.appendChild(mesesParrafo);
     divResultado.appendChild(quincenasParrafo);
     divResultado.appendChild(tasaAhParrafo);
+    divResultado.appendChild(tasaPeParrafo);
     divResultado.appendChild(cuotaMenParrafo);
     divResultado.appendChild(cuotaQuiParrafo);
     divResultado.appendChild(totalTotal);
@@ -379,8 +434,11 @@ function simulacion(e){
     }, 5000);*/
 
     //Limpiar
-    //inversion.value = '';
-    //plazo.value = '';
+    //cedula.value = '';
+    //nombre.value = '';
+    //porAhorros.value = '';
+    //valValor.value = '';
+    //valMeses.value = '';
 
     //Reiniciar el formulario
     //formulario.reset();
@@ -409,21 +467,17 @@ const formatterPeso = new Intl.NumberFormat('es-CO', {
      * @param {Integer} exp   El exponente (El logaritmo de ajuste en base 10).
      * @returns {Number} El valor ajustado.
      */
-
     function decimalAdjust(type, value, exp) {
         // Si exp es undefined o cero...
         if (typeof exp === 'undefined' || +exp === 0) {
             return Math[type](value);
         }
-
         value = +value;
         exp = +exp;
-
         // Si el valor no es un número o exp no es un entero...
         if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
             return NaN;
         }
-
         // Shift
         value = value.toString().split('e');
         value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
@@ -432,20 +486,18 @@ const formatterPeso = new Intl.NumberFormat('es-CO', {
         return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
     }
 
-     // Decimal round
+    // Decimal round
     if (!Math.round10) {
         Math.round10 = function(value, exp) {
             return decimalAdjust('round', value, exp);
         };
     }
-
     // Decimal floor
     if (!Math.floor10) {
         Math.floor10 = function(value, exp) {
             return decimalAdjust('floor', value, exp);
         };
     }
-
     // Decimal ceil
     if (!Math.ceil10) {
         Math.ceil10 = function(value, exp) {
@@ -453,6 +505,7 @@ const formatterPeso = new Intl.NumberFormat('es-CO', {
         };
     }
 })();
+
 
 $("input[data-type='currency']").inputmask({
     groupSeparator: ",",
