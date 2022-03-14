@@ -536,4 +536,6 @@ function printDiv(nombreDiv) {
     porAhorros.value = '';
     valValor.value = '';
     valMeses.value = '';
+
+    contenido.reset();
 }
