@@ -28,6 +28,9 @@ const tasaFE = 0.05;
 const tasaPV = 0.06;
 const tasaORD = 0.025;
 
+let date = new Date();
+console.log(date.toLocaleDateString());
+
 //Resultado
 let porAh;
 let tipo;
@@ -62,6 +65,7 @@ let valorCredito;
  @param {string} totalGeneral
  @param {string} porCr
  @param {string} valorCredito
+ @param {string} date
  */
 
  //Clases
@@ -181,8 +185,8 @@ btnvivienda.addEventListener("click", async (e) => {
     seleccion = "Vivienda"  
 });
 
-const saveRegistro = (cedula, nombre, tipo, meta, porAh, valorAhorro,
-    meses, quincenas, tasa, tasaPer, valorCuotaMensual, valorCuotaQuincenal, totalGeneral, porCr, valorCredito) =>
+const saveRegistro = (cedula, nombre, tipo, meta, porAh, valorAhorro, meses, quincenas, tasa,
+        tasaPer, valorCuotaMensual, valorCuotaQuincenal, totalGeneral, porCr, valorCredito, date) =>
     db.collection("simuladorsuenos").doc().set({
     cedula,
     nombre,
@@ -199,6 +203,7 @@ const saveRegistro = (cedula, nombre, tipo, meta, porAh, valorAhorro,
     totalGeneral,
     porCr,
     valorCredito,
+    date,
 });
 
 btncalcular.addEventListener("click", async (e) => {
@@ -224,7 +229,7 @@ btncalcular.addEventListener("click", async (e) => {
             
     
             await saveRegistro(cedula.value, nombre.value, tipo, meta, porAh, valorAhorro, meses, quincenas,
-                tasa, tasaPer, valorCuotaMensual, valorCuotaQuincenal, totalGeneral, porCr,  valorCredito);
+                tasa, tasaPer, valorCuotaMensual, valorCuotaQuincenal, totalGeneral, porCr,  valorCredito, date);
         }
 
     } catch (error) {
