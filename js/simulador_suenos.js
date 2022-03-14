@@ -432,22 +432,21 @@ function simulacion(e){
     //Agregar las citas al HTML
     resultado.appendChild(divResultado);    
 
-    /*//Limpiar resultado después de 5 segundo
+    //Limpiar resultado después de 5 segundo
     setTimeout(() => {
+
+        //Limpiar
+        cedula.value = '';
+        nombre.value = '';
+        porAhorros.value = '';
+        valValor.value = '';
+        valMeses.value = '';
+
         resultado.remove();
 
-    }, 5000);*/
+    }, 15000);
 
-    //Limpiar
-    //cedula.value = '';
-    //nombre.value = '';
-    //porAhorros.value = '';
-    //valValor.value = '';
-    //valMeses.value = '';
-
-    //Reiniciar el formulario
-    //formulario.reset();
-    
+      
 }
 
 
@@ -536,6 +535,5 @@ function printDiv(nombreDiv) {
     porAhorros.value = '';
     valValor.value = '';
     valMeses.value = '';
-
-    contenido.reset();
+   
 }
