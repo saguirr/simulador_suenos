@@ -524,4 +524,11 @@ function printDiv(nombreDiv) {
     document.body.innerHTML = contenido;
     window.print();
     document.body.innerHTML = contenidoOriginal;
+
+    //Limpiar
+    cedula.value = '';
+    nombre.value = '';
+    porAhorros.value = '';
+    valValor.value = '';
+    valMeses.value = '';
 }
