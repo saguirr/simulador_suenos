@@ -215,8 +215,10 @@ btncalcular.addEventListener("click", async (e) => {
     val = Number(va.replace(/,/g, ''));
 
     //Validacion
-    try {
-        if(isNaN(porAh) || isNaN(val) || isNaN(meses) || val === 0){
+    try {if(cedula.value == '' || nombre.value == '') {
+            ui.imprimirAlerta('El número de documento y El nombre son obligatorios para la simulación', 'error');
+            return;
+        }else if(isNaN(porAh) || isNaN(val) || isNaN(meses) || val === 0){
             ui.imprimirAlerta('Todos los campos son obligatorios para realizar la simulación', 'error');
             return;
         }else if (porAh > 100) {
