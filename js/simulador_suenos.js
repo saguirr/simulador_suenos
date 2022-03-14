@@ -101,7 +101,7 @@ let valorCredito;
          setTimeout(() => {
              divMensaje.remove();
              divMensaje1.remove();            
-         }, 3000);
+         }, 10000);
      }
  }
 
@@ -444,7 +444,7 @@ function simulacion(e){
 
         resultado.remove();
 
-    }, 15000);
+    }, 60000);
 
       
 }
