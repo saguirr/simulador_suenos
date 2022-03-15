@@ -4,21 +4,19 @@ body {
     margin: 10px;
 }
 
-
-.formulario{
-  margin: 0 auto;
-  text-align: center;
-  width: auto;
-}
-
 .div_form{
   margin: 0 auto;
   text-align: center;
   width: auto;
 }
 
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
 .titulo{
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Raleway', Verdana;
   font-weight: 100;
   color: #000000;
   font-size: 25px;
@@ -27,23 +25,41 @@ body {
 }
 
 .cuerpo{
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Raleway', Verdana;
   font-weight: 100;
   color: #000000;
-  font-size: 15px;
+  font-size: 17px;
   text-align: center;
 }
 
 .nombres{
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Raleway', Verdana;
   font-weight: 100;
   color: #000000;
   font-size: 15px;
   font-weight: bold;
 }
 
+.label{
+  font-family: 'Raleway', Verdana;
+  font-weight: 100;
+  color: #000000;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.h3{
+  font-family: 'Raleway', Verdana;
+  font-weight: 100;
+  color: #000000;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
 .subtitulo{
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Raleway', Verdana;
   font-weight: 100;
   color: #0B2A70;
   font-size: 15px;
@@ -51,7 +67,7 @@ body {
 }
 
 .resultado_1 {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Raleway', Verdana;
   font-weight: 100;
   color: #000000;
   font-size: 15px;
@@ -59,7 +75,7 @@ body {
 }
 
 .resultado {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Raleway', Verdana;
   font-weight: 100;
   color: #FF2333;
   font-size: 15px;
@@ -74,7 +90,7 @@ body {
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Raleway', Verdana;
   font-size: 15px;
   padding: 10px 31px;
   text-decoration: none;
@@ -88,7 +104,7 @@ body {
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Raleway', Verdana;
   font-size: 15px;
   padding: 10px 31px;
   text-decoration: none;
@@ -97,18 +113,147 @@ body {
 
 .externo {
 
-    /* IMPORTANTE */
-    text-align: center;
-  }
+  /* IMPORTANTE */
+  text-align: center;
+}
   
 .interno {
 
-    padding: 15px;
-    margin: 10px;
+  padding: 15px;
+  margin: 10px;
     
-    /* IMPORTANTE */
-    display: inline-block;
+  /* IMPORTANTE */
+  display: inline-block;
 
-  }
+}
 
 
+.wizard .nav-tabs {
+  /*position: relative;
+  margin: 40px auto;
+  margin-bottom: 0;
+  margin: 0 0 1rem;
+  height: 10rem;
+  display: flex;
+  /* align-items por defecto tiene el valor `stretch` */
+  /*align-items: start;*/
+
+  width: 70%;
+  margin: 0 auto;
+  border-bottom-color: #4fa0cb;
+}
+
+
+
+.wizard > div.wizard-inner {
+  /*position: relative;
+  margin: 0 auto;
+  margin: 0 0 1rem;
+  height: 10rem;
+  display: flex;*/
+  /* align-items por defecto tiene el valor `stretch` */
+  width: 70%;
+  margin: 0 auto;
+  align-items: start;
+
+}
+
+.connecting-line {
+  height: 2px;
+  background: #4fa0cb;
+  position: absolute;
+  width: 80%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 50%;
+  z-index: 1;
+}
+
+.wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
+  color: #555555;
+  cursor: default;
+  border: 0;
+  border-bottom-color: transparent;
+}
+
+span.round-tab {
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
+  display: inline-block;
+  border-radius: 100px;
+  background: #fff;
+  border: 2px solid #4fa0cb;
+  z-index: 2;
+  position: absolute;
+  left: 0;
+  text-align: center;
+  font-size: 25px;
+}
+
+span.round-tab i{
+  color:#4fa0cb;
+}
+
+.wizard li.active span.round-tab {
+  background: #fff;
+  border: 2px solid #4fa0cb;
+
+}
+.wizard li.active span.round-tab i{
+  color: #5bc0de;
+}
+
+span.round-tab:hover {
+  color: #333;
+  border: 2px solid #4fa0cb;
+}
+
+.wizard .nav-tabs > li {
+  width: 25%;
+}
+
+.wizard li:after {
+  content: " ";
+  position: absolute;
+  left: 46%;
+  opacity: 0;
+  margin: 0 auto;
+  bottom: 0px;
+  border: 5px solid transparent;
+  border-bottom-color: #5bc0de;
+  transition: 0.1s ease-in-out;
+}
+
+.wizard li.active:after {
+  content: " ";
+  position: absolute;
+  left: 46%;
+  opacity: 1;
+  margin: 0 auto;
+  bottom: 0px;
+  border: 10px solid transparent;
+  border-bottom-color: #4fa0cb;
+}
+
+.wizard .nav-tabs > li a {
+  width: 70px;
+  height: 70px;
+  margin: 20px auto;
+  border-radius: 100%;
+  padding: 0;
+}
+
+.wizard .nav-tabs > li a:hover {
+  background: transparent;
+}
+
+.wizard .tab-pane {
+  position: relative;
+  padding-top: 50px;
+}
+
+.wizard h3 {
+  margin-top: 0;
+}

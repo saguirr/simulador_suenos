@@ -22,116 +22,150 @@
     <p class="cuerpo">Te invitamos a realizar la simulación según tus necesidades y expectativas.</p>
 </header>   
     
-    <div class="container " id="contenido">
-        <div class="row justify-content-center mt-5 pt-5">
-          <div class="col-md-7">
-            <ul class="nav nav-tabs">
-              <li class="active"><a data-toggle="tab" href="#registro">Registro</a></li>
-              <li><a data-toggle="tab" href="#sueño">Sueños</a></li>
-              <li><a data-toggle="tab" href="#opcion">Opción</a></li>
-              <li><a data-toggle="tab" href="#simulacion">Simulación</a></li>
-            </ul>
-          
-            <div class="tab-content">
-              <div id="registro" class="tab-pane fade in active">
-                <div class="col-lg-12 agregar-registro">
-                  <h3 class="cuerpo">Te invitamos a que ingreses tus datos personales.</h3>
-                  <br>
-                  <div class="row justify-content-center">
-                      <form id="form-registro">               
-                          <div class="row form-group">
-                              <label for="identificacion" class="nombres col-form-label col-md-4">Identificación:</label>
-                              <div class="justify-content-center col-md-3">
-                                  <input type="text" name="identificacion" value="" id="identificacion" class="form-control">
-                              </div>
-                          </div>
-                          <div class="row form-group">
-                              <label for="nombre" class="nombres col-form-label col-md-4">Nombre:</label>
-                              <div class="justify-content-center col-md-8">
-                                  <input type="text" name="nombre" value="" id="nombre" class="form-control">
-                              </div>
-                          </div>
-                          <button type="button" id="siguiente" class="button1 w-40 d-block">Siguiente</button>
-                        </form>
-                  </div>
-                </div>                                
-              </div>
-              <div id="sueño" class="tab-pane fade">
-                <h3 class="cuerpo">Selecciona el sueño que quieres alcanzar</h3>    
-                <div class="justify-content-center align-items-center">
-                    <form id="form-sueño">
-                      <div  class="justify-content-center col-md-4">
-                        <h3 class="text-center">Educación</h3>
-                        <button type="button"  id="educacion" class="align-items-center"><img src="imagenes/EDUCACION.png"/></button> 
-                      </div>
-                      <div  class="justify-content-center col-md-4">
-                        <h3 class="text-center">Emprendimiento</h3>
-                        <button type="button"  id="emprendimiento" class="align-items-center"><img src="imagenes/EMPRENDIMIENTO.png"/></button> 
-                      </div>
-                      <div  class="justify-content-center col-md-4">
-                        <h3 class="text-center">Matrimonio</h3>
-                        <button type="button"  id="matrimonio" class="align-items-center"><img src="imagenes/MATRIMONIO.png"/></button> 
-                      </div>
-                      <div  class="justify-content-center col-md-4">
-                        <h3 class="text-center">Tecnologico</h3>
-                        <button type="button"  id="tecnologico" class="align-items-center"><img src="imagenes/TECNOLOGICO.png"/></button> 
-                      </div>
-                      <div  class="justify-content-center col-md-4">
-                        <h3 class="text-center">Vacaciones</h3>
-                        <button type="button"  id="vacaciones" class="align-items-center"><img src="imagenes/VACACIONES.png"/></button> 
-                      </div>
-                      <div  class="justify-content-center col-md-4">
-                        <h3 class="text-center">Vehículo</h3>
-                         <button type="button"  id="vehiculo" class="align-items-center"><img src="imagenes/VEHICULO.png"/></button>
-                      </div>
-                      <div class="justify-content-center col-md-4">
-                        <h3 class="text-center">Vivienda</h3>
-                        <button type="button"  id="vivienda" class="align-items-center"><img src="imagenes/VIVIENDA.png"/></button>
-                      </div>                         
-                    </form>                    
-                </div>                
-              </div>
-              <div id="opcion" class="tab-pane fade externo">
-                <div class="col-lg-15 agregar-opcion" >
-                    <form id="simulador", class="formulario">
-                      <h3 class="cuerpo">¿Cómo quieres lograr tu sueño?</h3>
-                      <div class="form-group row">                        
-                        <div class="justify-content-center col-md-4"> 
-                          <h3 class="nombres">¿Cuál es el valor de tu meta?</h3>                         
-                          <input type="text" id="valor" class="form-control" data-type="currency">
-                        </div>
-                      </div>
-                      <div class="form-group row">                        
+<div class="wizard" id="contenido">
+  <div class="row justify-content-center mt-5 pt-5">
+    <div class="col-md-7">
+      <ul class="nav nav-tabs" role="tablist">        
+        <li role="presentation" class="active">
+          <a href="#registro" data-toggle="tab" aria-controls="step1" role="tab" title="Registro">
+              <span class="round-tab">
+                  <i class="glyphicon glyphicon glyphicon-user"></i>
+              </span>                           
+          </a>
+        </li>
+        <li role="presentation" class="disabled">
+          <a href="#sueño" data-toggle="tab" aria-controls="step2" role="tab" title="Sueños">
+              <span class="round-tab">
+                  <i class="glyphicon glyphicon-book"></i>
+              </span>                    
+          </a>
+        </li>
+        <li role="presentation" class="disabled">
+            <a href="#opcion" data-toggle="tab" aria-controls="step3" role="tab" title="Opción">
+                <span class="round-tab">
+                    <i class="glyphicon glyphicon-piggy-bank"></i> 
+                </span>                    
+            </a>
+        </li>
+        <li role="presentation" class="disabled">
+            <a href="#simulacion" data-toggle="tab" aria-controls="complete" role="tab" title="Simulación">
+                <span class="round-tab">
+                    <i class="glyphicon glyphicon-ok"></i>
+                </span>                    
+            </a>
+        </li>
+      </ul>
+    
+      <div class="tab-content">
+        <div id="registro" class="tab-pane fade in active">
+          <div class="col-lg-12 agregar-registro">
+            <h3 class="cuerpo">Te invitamos a que ingreses tus datos personales.</h3>
+            <br>
+            <div class="row justify-content-center">
+                <form id="form-registro" class="container">               
+                    <div class="row form-group">
+                        <label for="identificacion" class="nombres col-form-label col-md-4">Identificación:</label>
                         <div class="justify-content-center col-md-4">
-                          <h3 class="nombres">% AHORROS</h3>
-                          <p class="text-center">Elige el porcentaje de ahorro  con el que considerás te va a ayudar a alcanzar tu meta.</p>                          
-                          <input type="number" min="1" max="100" id="ahorros" class="form-control" placeholder="% Ahorro">
+                            <input type="text" name="identificacion" value="" id="identificacion" class="form-control">
                         </div>
-                      </div>                      
-                      <div class="form-group row">                        
-                        <div class="justify-content-center col-md-4">
-                          <h3 class="nombres">¿En cuántos meses quieres lograrlo?</h3>                          
-                          <input type="number" min="1" max="72" id="meses" class="form-control" placeholder="# Meses">    
+                    </div>
+                    <div class="row form-group">
+                        <label for="nombre" class="nombres col-form-label col-md-4">Nombre:</label>
+                        <div class="justify-content-center col-md-8">
+                            <input type="text" name="nombre" value="" id="nombre" class="form-control">
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="externo col-md-10">
-                          <button type="button" id="calcular" class="button2 w-40 d-block">CALCULAR</button>
-                        </div>
-                      </div>                      
-                    </form>                                
-                </div>
-              </div>  
-              <div id="simulacion" class="tab-pane fade">
-                <div id="pdf" style="background-color: white;">
-                  <p class="cuerpo">Estamos felices de saber que tienes grandes sueños y metas por cumplir y que nosotros podemos acompañarte en ese camino.</p>         
-                </div>
-                <button type="button" id="calcular" class="btn btn-info" onclick="printDiv('areaImprimir')">IMPRIMIR SIMULACIÓN</button>                                           
-              </div>                
+                    </div>
+                    <button type="button" id="siguiente" class="button1 w-40 d-block">Siguiente</button>
+                  </form>
             </div>
+          </div>                                
+        </div>
+
+        <div id="sueño" class="tab-pane fade">
+          <h3 class="cuerpo">Selecciona el sueño que quieres alcanzar</h3>
+          <br>   
+          <div class="justify-content-center align-items-center">
+              <form id="form-sueño" class="container">
+                <div  class="justify-content-center col-md-4">
+                  <h3 class="h3">EDUCACIÓN</h3>
+                  <button type="button"  id="educacion" class="align-items-center"><img src="imagenes/EDUCACION.png"/></button> 
+                </div>
+                <div  class="justify-content-center col-md-4">
+                  <h3 class="h3">EMPRENDIMIENTO</h3>
+                  <button type="button"  id="emprendimiento" class="align-items-center"><img src="imagenes/EMPRENDIMIENTO.png"/></button> 
+                </div>
+                <div  class="justify-content-center col-md-4">
+                  <h3 class="h3">MATRIMONIO</h3>
+                  <button type="button"  id="matrimonio" class="align-items-center"><img src="imagenes/MATRIMONIO.png"/></button>                   
+                </div>              
+                <div  class="justify-content-center col-md-4">
+                  <br>
+                  <h3 class="h3">TECNOLÓGICO</h3>                  
+                  <button type="button"  id="tecnologico" class="align-items-center"><img src="imagenes/TECNOLOGICO.png"/></button> 
+                </div>
+                <div  class="justify-content-center col-md-4">
+                  <br>
+                  <h3 class="h3">VACACIONES</h3>
+                  <button type="button"  id="vacaciones" class="align-items-center"><img src="imagenes/VACACIONES.png"/></button> 
+                </div>
+                <div  class="justify-content-center col-md-4">
+                  <br>
+                  <h3 class="h3">VEHÍCULO</h3>
+                   <button type="button"  id="vehiculo" class="align-items-center"><img src="imagenes/VEHICULO.png"/></button>
+                </div>
+                <div class="justify-content-center col-md-4">
+                  <br>
+                  <h3 class="h3">VIVIENDA</h3>
+                  <button type="button"  id="vivienda" class="align-items-center"><img src="imagenes/VIVIENDA.png"/></button>
+                </div>                         
+              </form>                    
+          </div>                
+        </div>
+
+        <div id="opcion" class="tab-pane fade externo">
+          <div class="col-lg-15 agregar-opcion" >
+              <form id="simulador", class="container">
+                <h3 class="cuerpo">¿Cómo quieres lograr tu sueño?</h3>
+                <div class="form-group row">                        
+                  <div class="justify-content-center col-md-4"> 
+                    <h3 class="nombres">¿Cuál es el valor de tu meta?</h3>                         
+                    <input type="text" id="valor" class="form-control" data-type="currency">
+                  </div>
+                </div>
+                <div class="form-group row">                        
+                  <div class="justify-content-center col-md-4">
+                    <h3 class="nombres">% AHORROS</h3>
+                    <p class="text-center">Elige el porcentaje de ahorro  con el que considerás te va a ayudar a alcanzar tu meta.</p>                          
+                    <input type="number" min="1" max="100" id="ahorros" class="form-control" placeholder="% Ahorro">
+                  </div>
+                </div>                      
+                <div class="form-group row">                        
+                  <div class="justify-content-center col-md-4">
+                    <h3 class="nombres">¿En cuántos meses quieres lograrlo?</h3>                          
+                    <input type="number" min="1" max="72" id="meses" class="form-control" placeholder="# Meses">    
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="externo col-md-10">
+                    <button type="button" id="calcular" class="button2 w-40 d-block">CALCULAR</button>
+                  </div>
+                </div>                      
+              </form>                                
           </div>
-        </div>  
-      </div>        
+        </div>
+
+        <div id="simulacion" class="tab-pane fade container">
+          <div id="pdf" style="background-color: white;">
+            <p class="cuerpo">Estamos felices de saber que tienes grandes sueños y metas por cumplir y que nosotros podemos acompañarte en ese camino.</p>         
+          </div>
+          <button type="button" id="calcular" class="btn btn-info" onclick="printDiv('areaImprimir')">GUARDAR SIMULACIÓN</button>
+          <br>
+          <br>                                          
+        </div>                
+      </div>
+    </div>
+  </div>  
+</div>         
     
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>

@@ -131,7 +131,8 @@ btnsiguiente.addEventListener("click", async (e) => {
         ui.imprimirAlerta("Faltan datos para realizar el registro");
         return;
     } else {
-        activaTab('sueño');        
+        activaTab('sueño');   
+       // nextTab('sueño');  
     }    
 
 });
@@ -363,58 +364,62 @@ function simulacion(e){
     const tipoParrafo = document.createElement('h3');
     //tipoParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
     tipoParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
-    tipoParrafo.innerHTML = `<span class="subtitulo">El ahorro que debes aperturar para cumplir tu sueño es:</span> 
+    tipoParrafo.innerHTML = `<span class="subtitulo">El ahorro que debes abrir para cumplir tu sueño es:</span> 
                             <br>
                             <span class="resultado">${tipo} </span>
                             <br>
                             <br>`;
 
     const metaParrafo = document.createElement('p');
-    metaParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
+    metaParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
     metaParrafo.innerHTML = `<span class="subtitulo">Sueño a Alcanzar:</span> <span class="resultado_1">${meta} </span>`;
 
     const porcentajeAhorroParrafo = document.createElement('p');
-    porcentajeAhorroParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
+    porcentajeAhorroParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
     porcentajeAhorroParrafo.innerHTML = `<span class="subtitulo">Porcentaje de Ahorro:</span> <span class="resultado_1">${porAh} % </span>`;
 
     const ahorroParrafo = document.createElement('p');
-    ahorroParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
+    ahorroParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
     ahorroParrafo.innerHTML = `<span class="subtitulo">Total a Ahorrar:</span> <span class="resultado">${valorAhorro} </span>`;
 
     const mesesParrafo = document.createElement('p');
-    mesesParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
+    mesesParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
     mesesParrafo.innerHTML = `<span class="subtitulo">Plazo en meses:</span> <span class="resultado">${meses} meses</span>`;
 
     const quincenasParrafo = document.createElement('p');
-    quincenasParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
+    quincenasParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
     quincenasParrafo.innerHTML = `<span class="subtitulo">Plazo en quincenas:</span> <span class="resultado_1">${quincenas}</span>`;
 
     const tasaAhParrafo = document.createElement('p');
-    tasaAhParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
+    tasaAhParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
     tasaAhParrafo.innerHTML = `<span class="subtitulo">Tasa del Ahorro:</span> <span class="resultado_1">${tasa} %</span>`;
 
     const tasaPeParrafo = document.createElement('p');
-    tasaPeParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
+    tasaPeParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
     tasaPeParrafo.innerHTML = `<span class="subtitulo">Tasa del Periodo:</span> <span class="resultado_1">${tasaPer} %</span>`;
 
     const cuotaMenParrafo = document.createElement('p');
-    cuotaMenParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
+    cuotaMenParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
     cuotaMenParrafo.innerHTML = `<span class="subtitulo">Cuota Mensual:</span> <span class="resultado">${valorCuotaMensual}</span>`;
 
     const cuotaQuiParrafo = document.createElement('p');
-    cuotaQuiParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
+    cuotaQuiParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
     cuotaQuiParrafo.innerHTML = `<span class="subtitulo">Cuota Quincenal:</span> <span class="resultado_1">${valorCuotaQuincenal}</span>`;
 
     const totalTotal = document.createElement('p');
-    totalTotal.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
+    totalTotal.classList.add('card-title', 'Verdana', 'font-weight-bolder');
     totalTotal.innerHTML = `<span class="subtitulo">Valor Aproximado a Recibir:</span> <span class="resultado"> ${totalGeneral}</span>`;
 
     const creditoParrafo = document.createElement('p');
-    creditoParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
-    creditoParrafo.innerHTML = `<span class="cuerpo">El porcentaje de crédito para completar tu meta es de:</span> <span class="resultado_1">${porCr} % </span>
+    creditoParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
+    creditoParrafo.innerHTML = `<span class="cuerpo">El porcentaje de </span><span class="resultado_1">crédito </span><span class="cuerpo">para completar tu meta es de:</span> <span class="resultado_1">${porCr} % </span>
                                 <span class="cuerpo">Que corresponde a un valor en Crédito de:</span> <span class="resultado_1">${valorCredito}. </span>
                                 <br>
-                                <span class="cuerpo">Para realizar la simulación del valor del crédito, ingresa a Servicios en Línea en:</span> <span class="cuerpo">${url} </span>`;
+                                <span class="cuerpo">Para realizar la </span><span class="resultado_1">simulación </span><span class="cuerpo"> del valor del crédito, ingresa a </span><span class="resultado_1">Servicios en Línea en:</span> <span class="cuerpo">${url} </span>
+                                <br>
+                                <br>
+                                <br>
+                                <span class="resultado">Puedes guardar la simulación en formato PDF dandole click al botón "guardar simulación" </span>`;
 
     //Agregar los parrafos al divCita
     divResultado.appendChild(asociadoParrafo);
@@ -453,8 +458,14 @@ function simulacion(e){
 
 
 function activaTab(tab){
-    $('.nav-tabs a[href="#' + tab + '"]').tab('show');
+    $('.nav-tabs a[href="#' + tab + '"]').tab('show'); 
+    //$('.nav-tabs a[href="#' + tab + '"]').tab('hide');
 };
+
+
+
+
+
 
 //FUNCIONES
 const formatterPeso = new Intl.NumberFormat('es-CO', {
