@@ -19,7 +19,7 @@
     <center><img src="https://feproteccion.com.co/wp-content/uploads/2019/03/logo_fondo.png" width="210" height="110" alt=""/></center>
     <br>
     <h2 class="titulo">BIENVENIDO AL SIMULADOR DE SUEÑOS</h2>
-    <p class="cuerpo">Te invitamos a realizar la simulación según tus necesidades y expectativas.</p>
+    <p class="subtitulo">Te invitamos a realizar la simulación según tus necesidades y expectativas.</p>
 </header>   
     
 <div class="wizard" id="contenido">
@@ -59,7 +59,7 @@
       <div class="tab-content">
         <div id="registro" class="tab-pane fade in active">
           <div class="col-lg-12 agregar-registro">
-            <h3 class="cuerpo">Te invitamos a que ingreses tus datos personales.</h3>
+            <h3 class="subtitulo">Ingresa tus datos personales.</h3>
             <br>
             <div class="row justify-content-center">
                 <form id="form-registro" class="container">               
@@ -83,7 +83,7 @@
         </div>
 
         <div id="sueño" class="tab-pane fade">
-          <h3 class="cuerpo">Selecciona el sueño que quieres alcanzar</h3>
+          <h3 class="subtitulo">Selecciona el sueño que quieres alcanzar.</h3>
           <br>   
           <div class="justify-content-center align-items-center">
               <form id="form-sueño" class="container">
@@ -126,7 +126,8 @@
         <div id="opcion" class="tab-pane fade externo">
           <div class="col-lg-15 agregar-opcion" >
               <form id="simulador", class="container">
-                <h3 class="cuerpo">¿Cómo quieres lograr tu sueño?</h3>
+                <h3 class="subtitulo">¿Cómo quieres lograr tu sueño?</h3>
+                <br>
                 <div class="form-group row">                        
                   <div class="justify-content-center col-md-4"> 
                     <h3 class="nombres">¿Cuál es el valor de tu meta?</h3>                         
@@ -136,7 +137,7 @@
                 <div class="form-group row">                        
                   <div class="justify-content-center col-md-4">
                     <h3 class="nombres">% AHORROS</h3>
-                    <p class="text-center">Elige el porcentaje de ahorro  con el que considerás te va a ayudar a alcanzar tu meta.</p>                                             
+                    <p class="text-center">Elige el porcentaje del total de tu meta que debes ahorrar para alcanzar tu sueño.</p>                                             
                     <!--<input type="number" min="1" max="100" id="ahorros" class="form-control" placeholder="% Ahorro" maxlength="3" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">-->
                     <select type="number" id="ahorros" name="ahorros" class="form-control"  placeholder="% Ahorro"></select>                  
                   </div>                  
@@ -173,7 +174,7 @@
         </div>-->
         <div id="simulacion" class="tab-pane fade container">
           <div id="pdf" style="background-color: white;">
-            <p class="cuerpo">Estamos felices de saber que tienes grandes sueños y metas por cumplir y que nosotros podemos acompañarte en ese camino.</p>         
+            <p class="subtitulo">Estamos felices de saber que tienes grandes sueños y metas por cumplir y que nosotros podemos acompañarte en ese camino.</p>         
           </div>
           <!--<button type="button" id="calcular" class="btn btn-info" onclick="printDiv('areaImprimir')">GUARDAR SIMULACIÓN</button>-->
           <button type="button" id="calcular" class="button1 w-40 d-block" onclick="printDiv('areaImprimir')">PDF</button
