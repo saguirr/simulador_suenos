@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIMULADOR DE SUEÑOS</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">    
     <link href="css/estilos.css" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -66,13 +66,14 @@
                     <div class="row form-group">
                         <label for="identificacion" class="nombres col-form-label col-md-4">Identificación:</label>
                         <div class="justify-content-center col-md-4">
-                            <input type="text" name="identificacion" value="" id="identificacion" class="form-control">
+                            <!--<input type="text" name="identificacion" value="" id="identificacion" class="form-control">-->
+                            <input type="number" name="identificacion" value="" id="identificacion" class="form-control" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
                         </div>
                     </div>
                     <div class="row form-group">
                         <label for="nombre" class="nombres col-form-label col-md-4">Nombre:</label>
                         <div class="justify-content-center col-md-8">
-                            <input type="text" name="nombre" value="" id="nombre" class="form-control">
+                            <input type="text" name="nombre" value="" id="nombre" class="form-control" onkeyup="mayus(this);">
                         </div>
                     </div>
                     <button type="button" id="siguiente" class="button1 w-40 d-block">Siguiente</button>
@@ -129,20 +130,21 @@
                 <div class="form-group row">                        
                   <div class="justify-content-center col-md-4"> 
                     <h3 class="nombres">¿Cuál es el valor de tu meta?</h3>                         
-                    <input type="text" id="valor" class="form-control" data-type="currency">
+                    <input type="text" pattern="(^[0-9]{0,2}$)|(^[0-9]{0,2}\.[0-9]{0,5}$)" min="1" max="999999999" id="valor" class="form-control" data-type="currency">
                   </div>
                 </div>
                 <div class="form-group row">                        
                   <div class="justify-content-center col-md-4">
                     <h3 class="nombres">% AHORROS</h3>
-                    <p class="text-center">Elige el porcentaje de ahorro  con el que considerás te va a ayudar a alcanzar tu meta.</p>                          
-                    <input type="number" min="1" max="100" id="ahorros" class="form-control" placeholder="% Ahorro">
-                  </div>
+                    <p class="text-center">Elige el porcentaje de ahorro  con el que considerás te va a ayudar a alcanzar tu meta.</p>                                             
+                    <!--<input type="number" min="1" max="100" id="ahorros" class="form-control" placeholder="% Ahorro" maxlength="3" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">-->
+                    <select type="number" id="ahorros" name="ahorros" class="form-control"  placeholder="% Ahorro"></select>                  
+                  </div>                  
                 </div>                      
                 <div class="form-group row">                        
                   <div class="justify-content-center col-md-4">
                     <h3 class="nombres">¿En cuántos meses quieres lograrlo?</h3>                          
-                    <input type="number" min="1" max="72" id="meses" class="form-control" placeholder="# Meses">    
+                    <input type="number" min="1" max="72" id="meses" class="form-control" placeholder="# Meses" maxlength="3" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">    
                   </div>
                 </div>
                 <div class="form-group">
@@ -153,15 +155,31 @@
               </form>                                
           </div>
         </div>
-
+        
+        <!--<div id="simulacion" class="tab-pane fade container">
+          <div class="col-lg-15 agregar-simulacion" >
+              <form id="resultado", class="container">
+                <h3 class="cuerpo">Estamos felices de saber que tienes grandes sueños y metas por cumplir y que nosotros podemos acompañarte en ese camino.</h3>
+                <div class="form-group row">                        
+                  <div id="pdf" style="background-color: white;">
+                            
+                  </div>
+                </div>                
+              </form>
+              <button type="button" id="calcular" class="btn btn-info" onclick="printDiv('areaImprimir')">GUARDAR SIMULACIÓN</button>
+              <br>
+              <br>
+          </div>          
+        </div>-->
         <div id="simulacion" class="tab-pane fade container">
           <div id="pdf" style="background-color: white;">
             <p class="cuerpo">Estamos felices de saber que tienes grandes sueños y metas por cumplir y que nosotros podemos acompañarte en ese camino.</p>         
           </div>
-          <button type="button" id="calcular" class="btn btn-info" onclick="printDiv('areaImprimir')">GUARDAR SIMULACIÓN</button>
+          <!--<button type="button" id="calcular" class="btn btn-info" onclick="printDiv('areaImprimir')">GUARDAR SIMULACIÓN</button>-->
+          <button type="button" id="calcular" class="button1 w-40 d-block" onclick="printDiv('areaImprimir')">PDF</button
           <br>
           <br>                                          
-        </div>                
+        </div>                   
       </div>
     </div>
   </div>  
@@ -202,10 +220,10 @@
 <br>
 <br>
 <br>
-<div class="container-fluid">
+<!--<div class="container-fluid">
   <span class="cuerpo">
     <strong>Nota:</strong>
     Los valores resultantes de esta simulación son de carácter informativo y pueden estar sujetos a variación conforme a las tasas de interés y plazos vigentes en el reglamento de Ahorros 
-    del Fondo de Empleados Protección**
+    del Fondo de Empleados Protección***
   </span>
-</div>
+</div>-->

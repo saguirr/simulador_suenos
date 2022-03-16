@@ -118,6 +118,10 @@ window.addEventListener("DOMContentLoaded", async(e) => {
     
 })
 
+window.addEventListener("load", function() {
+    cargarPlazos(event);
+}, false);
+
 
 btnsiguiente.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -358,12 +362,12 @@ function simulacion(e){
     //Scripting d elos elementos de la simulación
 
     const asociadoParrafo = document.createElement('h3');
-    asociadoParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder', 'text-center');
+    asociadoParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder', 'text-center');
     asociadoParrafo.innerHTML = `<span style="color: #0B2A70">${asociado} </span>`;
 
     const tipoParrafo = document.createElement('h3');
     //tipoParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
-    tipoParrafo.classList.add('card-title', 'sans-serif', 'font-weight-bolder');
+    tipoParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
     tipoParrafo.innerHTML = `<span class="subtitulo">El ahorro que debes abrir para cumplir tu sueño es:</span> 
                             <br>
                             <span class="resultado">${tipo} </span>
@@ -419,7 +423,12 @@ function simulacion(e){
                                 <br>
                                 <br>
                                 <br>
-                                <span class="resultado">Puedes guardar la simulación en formato PDF dandole click al botón "guardar simulación" </span>`;
+                                <span class="resultado">Puedes guardar la simulación en formato PDF dando click al botón "PDF" úbicado en la parte superior </span>
+                                <br>
+                                <br>
+                                <br>
+                                <span class="nota"><strong>Nota:</strong> Los valores resultantes de esta simulación son de carácter informativo y pueden estar sujetos a variación conforme a las tasas de interés y plazos vigentes en el reglamento de Ahorros 
+                                                         del Fondo de Empleados Protección***</span>`;
 
     //Agregar los parrafos al divCita
     divResultado.appendChild(asociadoParrafo);
@@ -451,21 +460,17 @@ function simulacion(e){
 
         resultado.remove();
 
-    }, 60000);
+        //activaTab('registro');
+
+    }, 100000);
 
       
 }
-
 
 function activaTab(tab){
     $('.nav-tabs a[href="#' + tab + '"]').tab('show'); 
     //$('.nav-tabs a[href="#' + tab + '"]').tab('hide');
 };
-
-
-
-
-
 
 //FUNCIONES
 const formatterPeso = new Intl.NumberFormat('es-CO', {
@@ -549,4 +554,34 @@ function printDiv(nombreDiv) {
     valValor.value = '';
     valMeses.value = '';
    
+}
+
+function mayus(e) {
+    e.value = e.value.toUpperCase();
+}
+
+
+//Funcion para cargar las provincias al campo "select".
+function cargarPlazos() {
+
+    const plazoSelect = document.querySelector("#ahorros");
+
+    //Inicializamos el array.
+    var array = ['', 10, 20, 30, 40, 50, 60, 70, 80, 90, 100].sort();
+    //Ordena el array alfabeticamente.
+    function comparar(a, b) { return a - b; }
+    array.sort(comparar); // [ 1, 5, 40, 200 ]
+    //Pasamos a la funcion addOptions(el ID del select, las provincias cargadas en el array).
+    addOptions("ahorros", array);
+}
+
+//Funcion para agregar opciones a un <select>.
+function addOptions(domElement, array) {
+    var selector = document.getElementsByName(domElement)[0];
+    //Recorremos el array.
+    for (plazoSelect in array) {
+        var opcion = document.createElement("option");
+        opcion.text = array[plazoSelect];
+        selector.add(opcion);
+    }
 }
