@@ -376,43 +376,43 @@ function simulacion(e){
 
     const metaParrafo = document.createElement('p');
     metaParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
-    metaParrafo.innerHTML = `<span class="subtitulo">Sueño a Alcanzar:</span> <span class="resultado_1">${meta} </span>`;
+    metaParrafo.innerHTML = `<span class="nomresultados">Sueño a Alcanzar:</span> <span class="resultado_1">${meta} </span>`;
 
     const porcentajeAhorroParrafo = document.createElement('p');
     porcentajeAhorroParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
-    porcentajeAhorroParrafo.innerHTML = `<span class="subtitulo">Porcentaje de Ahorro:</span> <span class="resultado_1">${porAh} % </span>`;
+    porcentajeAhorroParrafo.innerHTML = `<span class="nomresultados">Porcentaje de Ahorro:</span> <span class="resultado_1">${porAh} % </span>`;
 
     const ahorroParrafo = document.createElement('p');
     ahorroParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
-    ahorroParrafo.innerHTML = `<span class="subtitulo">Total a Ahorrar:</span> <span class="resultado">${valorAhorro} </span>`;
+    ahorroParrafo.innerHTML = `<span class="nomresultados">Total a Ahorrar:</span> <span class="resultado">${valorAhorro} </span>`;
 
     const mesesParrafo = document.createElement('p');
     mesesParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
-    mesesParrafo.innerHTML = `<span class="subtitulo">Plazo en meses:</span> <span class="resultado">${meses} meses</span>`;
+    mesesParrafo.innerHTML = `<span class="nomresultados">Plazo en meses:</span> <span class="resultado">${meses} meses</span>`;
 
     const quincenasParrafo = document.createElement('p');
     quincenasParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
-    quincenasParrafo.innerHTML = `<span class="subtitulo">Plazo en quincenas:</span> <span class="resultado_1">${quincenas}</span>`;
+    quincenasParrafo.innerHTML = `<span class="nomresultados">Plazo en quincenas:</span> <span class="resultado_1">${quincenas}</span>`;
 
     const tasaAhParrafo = document.createElement('p');
     tasaAhParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
-    tasaAhParrafo.innerHTML = `<span class="subtitulo">Tasa del Ahorro:</span> <span class="resultado_1">${tasa} %</span>`;
+    tasaAhParrafo.innerHTML = `<span class="nomresultados">Tasa del Ahorro:</span> <span class="resultado_1">${tasa} %</span>`;
 
     const tasaPeParrafo = document.createElement('p');
     tasaPeParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
-    tasaPeParrafo.innerHTML = `<span class="subtitulo">Tasa del Periodo:</span> <span class="resultado_1">${tasaPer} %</span>`;
+    tasaPeParrafo.innerHTML = `<span class="nomresultados">Tasa del Periodo:</span> <span class="resultado_1">${tasaPer} %</span>`;
 
     const cuotaMenParrafo = document.createElement('p');
     cuotaMenParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
-    cuotaMenParrafo.innerHTML = `<span class="subtitulo">Cuota Mensual:</span> <span class="resultado">${valorCuotaMensual}</span>`;
+    cuotaMenParrafo.innerHTML = `<span class="nomresultados">Cuota Mensual:</span> <span class="resultado">${valorCuotaMensual}</span>`;
 
     const cuotaQuiParrafo = document.createElement('p');
     cuotaQuiParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
-    cuotaQuiParrafo.innerHTML = `<span class="subtitulo">Cuota Quincenal:</span> <span class="resultado_1">${valorCuotaQuincenal}</span>`;
+    cuotaQuiParrafo.innerHTML = `<span class="nomresultados">Cuota Quincenal:</span> <span class="resultado_1">${valorCuotaQuincenal}</span>`;
 
     const totalTotal = document.createElement('p');
     totalTotal.classList.add('card-title', 'Verdana', 'font-weight-bolder');
-    totalTotal.innerHTML = `<span class="subtitulo">Valor Aproximado a Recibir:</span> <span class="resultado"> ${totalGeneral}</span>`;
+    totalTotal.innerHTML = `<span class="nomresultados">Valor Aproximado a Recibir:</span> <span class="resultado"> ${totalGeneral}</span>`;
 
     const creditoParrafo = document.createElement('p');
     creditoParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
