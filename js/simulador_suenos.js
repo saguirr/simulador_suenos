@@ -30,7 +30,7 @@ const tasaORD = 0.025;
 
 let fecha = new Date();
 const date = fecha.toLocaleDateString()
-console.log(date)
+//console.log(date)
 
 //Resultado
 let porAh;
