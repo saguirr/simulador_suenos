@@ -28,8 +28,9 @@ const tasaFE = 0.05;
 const tasaPV = 0.06;
 const tasaORD = 0.025;
 
-let date = new Date();
-//console.log(date.toLocaleDateString());
+let fecha = new Date();
+const date = fecha.toLocaleDateString()
+console.log(date)
 
 //Resultado
 let porAh;
