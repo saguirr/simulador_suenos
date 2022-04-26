@@ -7,7 +7,7 @@ function ingresar() {
             // Signed in
             // ...
             console.log('sesión iniciada');
-            window.location.href = "resultadoscdat.html";
+            window.location.href = "resultadossimulacion.html";
         })
         .catch((error) => {
             var errorCode = error.code;

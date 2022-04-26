@@ -55,6 +55,7 @@ let valorCredito;
  @param {string} nombre
  @param {string} tipo
  @param {string} meta
+ @param {string} sueño
  @param {string} porAh
  @param {string} valorAhorro   
  @param {string} meses  
@@ -146,7 +147,7 @@ btneducacion.addEventListener("click", async (e) => {
     e.preventDefault();
 
     activaTab('opcion');
-    seleccion = "Educacion"  
+    seleccion = "Educación"  
 });
 
 btnemprendimiento.addEventListener("click", async (e) => {
@@ -167,7 +168,7 @@ btntecnologico.addEventListener("click", async (e) => {
     e.preventDefault();
 
     activaTab('opcion');    
-    seleccion = "Tecnologico";     
+    seleccion = "Tecnológico";     
 });
 
 btnvacaciones.addEventListener("click", async (e) => {
@@ -181,7 +182,7 @@ btnvehiculo.addEventListener("click", async (e) => {
     e.preventDefault();
 
     activaTab('opcion');    
-    seleccion = "Vehiculo"; 
+    seleccion = "Vehículo"; 
 });
 
 btnvivienda.addEventListener("click", async (e) => {
@@ -191,13 +192,14 @@ btnvivienda.addEventListener("click", async (e) => {
     seleccion = "Vivienda"  
 });
 
-const saveRegistro = (cedula, nombre, tipo, meta, porAh, valorAhorro, meses, quincenas, tasa,
+const saveRegistro = (cedula, nombre, tipo, meta, sueño, porAh, valorAhorro, meses, quincenas, tasa,
         tasaPer, valorCuotaMensual, valorCuotaQuincenal, totalGeneral, porCr, valorCredito, date) =>
     db.collection("simuladorsuenos").doc().set({
     cedula,
     nombre,
-    tipo,
+    tipo,    
     meta,
+    sueño,
     porAh,
     valorAhorro,
     meses,
@@ -236,7 +238,7 @@ btncalcular.addEventListener("click", async (e) => {
             simulacion();
             
     
-            await saveRegistro(cedula.value, nombre.value, tipo, meta, porAh, valorAhorro, meses, quincenas,
+            await saveRegistro(cedula.value, nombre.value, tipo, meta, seleccion, porAh, valorAhorro, meses, quincenas,
                 tasa, tasaPer, valorCuotaMensual, valorCuotaQuincenal, totalGeneral, porCr,  valorCredito, date);
         }
 
@@ -269,7 +271,7 @@ function simulacion(e){
     }
 
     switch (seleccion) {
-        case "Educacion":
+        case "Educación":
             tipo = "Ahorro Universitario"
             tasaPeriodo = Math.round10((((1 + tasaED) ** (1 / 365)) ** dias), -1, -5);
             tasaP30 = Math.round10((((1 + tasaED) ** (1 / 365)) ** diames) - 1, -5);
@@ -287,7 +289,7 @@ function simulacion(e){
             tasaP30 = Math.round10((((1 + tasaORD) ** (1 / 365)) ** diames) - 1, -5);
             tasa = Math.round10((tasaORD * 100), -5);
             break;
-        case "Tecnologico":
+        case "Tecnológico":
             tipo = "Ahorro Ordinario"
             tasaPeriodo = Math.round10((((1 + tasaORD) ** (1 / 365)) ** dias) - 1, -5);
             tasaP30 = Math.round10((((1 + tasaORD) ** (1 / 365)) ** diames) - 1, -5);
@@ -299,7 +301,7 @@ function simulacion(e){
             tasaP30 = Math.round10((((1 + tasaFE) ** (1 / 365)) ** diames) - 1, -5);
             tasa = Math.round10((tasaFE * 100), -5);
             break;
-        case "Vehiculo":
+        case "Vehículo":
             tipo = "Ahorro Fin Específico"
             tasaPeriodo = Math.round10((((1 + tasaFE) ** (1 / 365)) ** dias) - 1, -5);
             tasaP30 = Math.round10((((1 + tasaFE) ** (1 / 365)) ** diames) - 1, -5);
@@ -375,6 +377,10 @@ function simulacion(e){
                             <br>
                             <br>`;
 
+    const suenoParrafo = document.createElement('p');
+    suenoParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
+    suenoParrafo.innerHTML = `<span class="nomresultados">Tu sueño es:</span> <span class="resultado">${seleccion} </span>`;
+
     const metaParrafo = document.createElement('p');
     metaParrafo.classList.add('card-title', 'Verdana', 'font-weight-bolder');
     metaParrafo.innerHTML = `<span class="nomresultados">Sueño a Alcanzar:</span> <span class="resultado_1">${meta} </span>`;
@@ -434,6 +440,7 @@ function simulacion(e){
     //Agregar los parrafos al divCita
     divResultado.appendChild(asociadoParrafo);
     divResultado.appendChild(tipoParrafo);
+    divResultado.appendChild(suenoParrafo);
     divResultado.appendChild(metaParrafo);
     divResultado.appendChild(porcentajeAhorroParrafo);
     divResultado.appendChild(ahorroParrafo);    

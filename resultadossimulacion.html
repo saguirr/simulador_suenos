@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title class="titulo">SIMULACIONES</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">    
     <link href="css/estilos.css" rel="stylesheet" type="text/css">
@@ -15,26 +15,30 @@
     <script src="js/jsPDF/dist/jspdf.min.js"></script>
     <script type="text/javascript" src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
 </head>
-
+<header>
+    <center><img src="https://feproteccion.com.co/wp-content/uploads/2019/03/logo_fondo.png" width="210" height="110" alt=""/></center>
+</header>
 <main class="md:w-3/5 xl:w-4/5 px-5 py-10 bg-gray-200">
     <div class="cold-md-6" id="simulacion-container">
-        <h3 id="simulacion" class="text-center font-weight-bold">SIMULACIONES</h3>        
+        <h3 id="simulacion" class="titulo">SIMULACIONES</h3>
+        <a href="#" id="descarga" onClick="javascript:fnExcelReport();">Download</a>        
         <table class="table table-hover" id='tblData'>
             <thead>
             <tr>
-                <th scope="col" class="h4 text-center">Cedula</th>
-                <th scope="col" class="h4 text-center">Nombre</th>
-                <th scope="col" class="h4 text-center">Fecha</th>
-                <th scope="col" class="h4 text-center">Meta</th>
-                <th scope="col" class="h4 text-center">Tipo Ahorro</th>
-                <th scope="col" class="h4 text-center">% Ahorro</th>
-                <th scope="col" class="h4 text-center">$ Ahorro</th>
-                <th scope="col" class="h4 text-center">TasaAhorro</th>
-                <th scope="col" class="h4 text-center">Plazo</th>
-                <th scope="col" class="h4 text-center">CuotaMensual</th>
-                <th scope="col" class="h4 text-center">ValoraRecibir</th>                 
-                <th scope="col" class="h4 text-center">% Credito</th>
-                <th scope="col" class="h4 text-center">$ Credito</th>
+                <th scope="col" class="nombres text-center">Cedula</th>
+                <th scope="col" class="nombres text-center">Nombre</th>
+                <th scope="col" class="nombres text-center">Fecha</th>
+                <th scope="col" class="nombres text-center">Meta</th>
+                <th scope="col" class="nombres text-center">Sueño</th>
+                <th scope="col" class="nombres text-center">Tipo Ahorro</th>
+                <th scope="col" class="nombres text-center">% Ahorro</th>
+                <th scope="col" class="nombres text-center">$ Ahorro</th>
+                <th scope="col" class="nombres text-center">TasaAhorro</th>
+                <th scope="col" class="nombres text-center">Plazo</th>
+                <th scope="col" class="nombres text-center">CuotaMensual</th>
+                <th scope="col" class="nombres text-center">ValoraRecibir</th>                 
+                <th scope="col" class="nombres text-center">% Credito</th>
+                <th scope="col" class="nombres text-center">$ Credito</th>
             </tr>
             </thead>  
             <tbody id="listado-simulacion" class="bg-white"></tbody>                  
